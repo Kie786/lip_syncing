@@ -1,0 +1,88 @@
+# implenting video without audio track
+
+!pip install moviepy pytube
+import os
+from moviepy.editor import VideoFileClip
+
+from pytube import YouTube
+
+video_url = "https://www.youtube.com/watch?v=YMuuEv37s0o&ab_channel=Prasadtechintelugu"
+video_file_path = "/content/sample_data/input_video.mp4"
+
+yt = YouTube(video_url)
+stream = yt.streams.filter(progressive=True, file_extension="mp4").first()
+stream.download(output_path=os.path.dirname(video_file_path), filename=os.path.basename(video_file_path))
+
+videoclip = VideoFileClip(video_file_path)
+new_clip = videoclip.without_audio()
+new_clip.write_videofile("/content/sample_data/audio_removed_video.mp4")
+
+
+# filtering input video
+
+!pip install opencv-python-headless opencv-python numpy dlib
+
+import cv2
+import numpy as np
+import dlib
+from google.colab.patches import cv2_imshow
+
+# Load the face detector model from dlib
+
+face_detector = dlib.get_frontal_face_detector()
+
+# load video file
+
+video_file = "/content/sample_data/audio_removed_video.mp4"
+cap = cv2.VideoCapture(video_file)
+
+# Get the frames per second and total number of frames
+
+fps = int(cap.get(cv2.CAP_PROP_FPS))
+total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+# Define the output video writer
+
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+output_file = 'output_video_with_faces.mp4'
+out = cv2.VideoWriter(output_file, fourcc, fps, (int(cap.get(3)), int(cap.get(4))))
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Detect faces in the frame
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_detector(gray)
+
+    if len(faces) > 0:
+        out.write(frame)
+
+    cv2_imshow(frame)
+    # Press 'q' to quit the video preview
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+
+print(f"Original video had {total_frames} frames.")
+print(f"Output video has been saved to {output_file}.")
+
+
+!pip install moviepy
+
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+
+input_video_path = '/content/output_video_with_faces.mp4'
+
+start_time = 0  # Start trimming from 10 seconds
+end_time = 50    # Trim until 60 seconds
+
+# Set the output video file path
+output_video_path = 'output_video.mp4'
+
+# Trim the video
+ffmpeg_extract_subclip(input_video_path, start_time, end_time, targetname=output_video_path)
