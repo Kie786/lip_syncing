@@ -6,3 +6,6 @@ Mindmap of this assessment:
 
 ![Document-SmartDraw](https://github.com/Kie786/lip_syncing/assets/96609652/42ea7f39-bc62-4af3-9bef-ea2e2b177ae3)
 
+Drive link of the results: https://drive.google.com/drive/folders/1cTjwbaqSHlQqBIG_foGFLlAGH3jWQXSb?usp=drive_link
+
+Note: Analysis and details of methods are given in drive link itself.
