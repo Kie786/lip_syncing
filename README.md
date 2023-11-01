@@ -8,4 +8,4 @@ Mindmap of this assessment:
 
 Drive link of the results: https://drive.google.com/drive/folders/1cTjwbaqSHlQqBIG_foGFLlAGH3jWQXSb?usp=drive_link
 
-Note: Analysis and details of methods are given in drive link itself.
+Note: Analysis and details of methods are given in drive link itself. I request you to go through the "Detail" text document in each method before watching results as it would give you better knowledge and analysis. 
